@@ -20,8 +20,6 @@ const Todo = ({ onClick, completed, todo,date}) => (
                      }}>
             
             {date}
-             
- 
             </td>
             
         </tr>

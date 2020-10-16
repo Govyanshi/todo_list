@@ -9,16 +9,14 @@ export const addTodo=(todo,date)=>{
         action
     }
 }
-export const deleteTodo=id=>{
+export const deleteTodo=(id)=>{
     const action={
+        type:DELETE_TODO,
         id 
     }
-    return {
-        type:'DELETE_TODO',
-        action
-    }
+    return action;
 }
-
+ 
 export const setVisibilityFilter = filter => ({
     type: 'SET_VISIBILITY_FILTER',
     filter

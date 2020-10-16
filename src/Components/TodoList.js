@@ -1,8 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
+import { deleteTodo } from "../Actions/action";
 import Todo from "./Todo";
 
+
 const Todos=({todos,toggleTodo,deleteTodo})=>{
-  console.log(deleteTodo)
   if(todos.length==0)
   return(
       <p>No todos for today!</p>
@@ -10,36 +12,8 @@ const Todos=({todos,toggleTodo,deleteTodo})=>{
   else{
   return(
   <div>
-   {/* <ul className="collection">
-            {
-                todos.map(todo=>{
-                   return(
-                       <table>
-                           <tr>
-                               <td  key={todo.id}
-                                            {...todo}
-                                            onClick={() => toggleTodo(todo.id)}>
-                                                <div>
-                                                    {todo.todo}
-                                                </div>
-                               </td>
-                               <td key={todo.id} className="collection-items">
-                                    <div className="todo">
-                                        {todo.date
-                                        }
-                                    </div>  
-                               </td>
-                               <td>
-                                    <button onClick={(id)=>{deleteTodo(todo.id)}}>Delete</button>
-                               </td>
-                           </tr>
-                       </table>
-                     
-                   )  
-                })
-            }
-          </ul>*/}
-         {
+       
+        {
               todos.map(todo=>{
                  return(
                      <table style={{border:"2px solid black"}}>
@@ -50,7 +24,7 @@ const Todos=({todos,toggleTodo,deleteTodo})=>{
                                           onClick={() => toggleTodo(todo.id)}/>                  
                              </td>
                              <td>
-                              <button onClick={(id)=>{deleteTodo(todo.id)}}>Delete</button>
+                              <button onClick={()=>deleteTodo(todo.id)} >Delete</button>
                                <button>Edit</button>
                             </td>    
                          </tr>
@@ -63,5 +37,13 @@ const Todos=({todos,toggleTodo,deleteTodo})=>{
   </div>
   )
       }
-  }
-export default Todos;
+  } 
+const mapDispatchToProps = dispatch=>{
+    return{
+        deleteTodo:id=>dispatch(deleteTodo(id))
+    }
+}
+export default connect(
+    null,
+    mapDispatchToProps
+) (Todos)

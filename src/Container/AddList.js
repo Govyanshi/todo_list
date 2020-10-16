@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { addTodo} from '../Actions/action';
-import {deleteTodo} from '../Actions/action';
-import Todo from '../Components/Todo';
-import TodoList from '../Components/TodoList'
 import Todos from '../Components/Todo';
+import {reset} from 'redux-form'
 import SimpleReactValidator from 'simple-react-validator';
 class AddList extends Component{
      constructor(){
          super();
          this.validator=new SimpleReactValidator();
+         
      }
     state={
         todo:'',
-        date:''
+        date:'',
+        editing:false
+       
     }
     handleChange=(e)=>{
         this.setState({
@@ -21,13 +22,16 @@ class AddList extends Component{
         })
       
     }
-    deleteTodo=(id)=>{
-        this.props.deleteTodo(id);
-    }
+   /* deleteTodo=(id)=>{
+       this.props.deleteTodo(id);
+       console.log(id);
+   }*/
     handleSubmit=(e)=>{
         e.preventDefault();
         if(this.validator.allValid()){
             this.props.addTodo(this.state.todo,this.state.date)
+        
+        
         }
         else{
             this.validator.showMessages();
@@ -41,7 +45,7 @@ class AddList extends Component{
         return(
              <div className="container">
                  <h1 style={{backgroundColor:'skyblue'}}>Todo Application</h1>
-            <form onSubmit={this.handleSubmit}>
+            <form name="toggle" onSubmit={this.handleSubmit}>
                 <label>
                    Enter Task todo <input type="text" id="todo"  onChange={this.handleChange}/>
                    <span className="text-danger">
@@ -65,6 +69,7 @@ class AddList extends Component{
 
 }
 
+
 const mapStateToProps=(state)=>{
     console.log('state',state);
    // console.log(deleteTodo)
@@ -72,4 +77,4 @@ const mapStateToProps=(state)=>{
         todos:state
     }
 }
-export default connect(mapStateToProps,{addTodo,deleteTodo})(AddList);
+export default connect(mapStateToProps,{addTodo})(AddList);
